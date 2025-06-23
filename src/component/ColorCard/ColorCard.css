@@ -1,0 +1,35 @@
+.color-card {
+  height: 100%;
+  background: #d3d347;
+  float: left;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.color-card .copy-color {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.color-card:hover .copy-color {
+  transform: translate(-50%, -50%) scale(1);
+  filter: brightness(1.2);
+}
+
+.color-card:hover {
+  filter: brightness(0.9);
+}
