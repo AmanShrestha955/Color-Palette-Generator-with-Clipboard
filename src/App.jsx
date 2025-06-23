@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+import ColorCard from "./component/ColorCard/ColorCard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const cardContainerWidth = 1000;
+  const [cardNum, setCardNum] = useState(5);
+  const [cardColors, setCardColors] = useState([]);
+  const generateRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const copyToClipboard = (color) => {
+    navigator.clipboard
+      .writeText(color)
+      .then(() => {
+        alert(`Color ${color} copied to clipboard!`);
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
+  const copyAll = () => {
+    let copy = "";
+    cardColors.forEach((color) => {
+      copy += color + "\n";
+    });
+    copyToClipboard(copy);
+  };
+
+  const generateColors = (colorCount) => {
+    const colors = [];
+    for (let i = 0; i < colorCount; i++) {
+      colors.push(generateRandomColor());
+    }
+    setCardColors(colors);
+  };
+  useEffect(() => {
+    generateColors(cardNum);
+  }, [, cardNum]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <main className="card-holder">
+        {cardColors.map((color, index) => (
+          <ColorCard
+            key={index}
+            color={color}
+            widthSize={cardContainerWidth / cardNum}
+            onCopy={() => copyToClipboard(color)}
+          />
+        ))}
+      </main>
+      <div className="btn">
+        <button
+          onClick={() =>
+            cardNum < 10 ? setCardNum(cardNum + 1) : setCardNum(3)
+          }
+        >
+          Add Color
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button onClick={() => generateColors(cardNum)}>generate</button>
+        <button onClick={() => copyAll()}>copy all</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
