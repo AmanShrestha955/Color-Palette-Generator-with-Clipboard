@@ -23,3 +23,30 @@ button {
   color: #232222;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+
+#color-picker {
+  margin: 0 0 40px 0;
+}
+
+.color-title {
+  color: #000;
+  font-size: 1.5rem;
+  margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .card-holder {
+    width: 70vw;
+    height: 60vh;
+  }
+
+  button {
+    margin: 20px auto;
+    display: block;
+    width: calc(100% - 80px);
+  }
+}
